@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Produk {
+  id            Int             @id @default(autoincrement())
+  nama          String          @unique
+  description   String?
+  harga         Int
+  stok          Int
+  gambar_url    String?
+  Keranjang     Keranjang[]
+  PesananDetail PesananDetail[]
+}
+
+model Keranjang {
+  id         Int    @id @default(autoincrement())
+  session_id String
+  produk_id  Int
+  jumlah     Int
+  Produk     Produk @relation(fields: [produk_id], references: [id])
+}
+
+model Pesanan {
+  id          Int             @id @default(autoincrement())
+  session_id  String
+  total_harga Int
+  status      String          @default("pending")
+  created_at  DateTime        @default(now())
+  Detail      PesananDetail[]
+}
+
+model PesananDetail {
+  id         Int     @id @default(autoincrement())
+  pesanan_id Int
+  produk_id  Int
+  jumlah     Int
+  subtotal   Int
+  Pesanan    Pesanan @relation(fields: [pesanan_id], references: [id])
+  Produk     Produk  @relation(fields: [produk_id], references: [id])
+}
