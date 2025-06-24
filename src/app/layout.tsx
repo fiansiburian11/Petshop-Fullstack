@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Lexend_Giga } from "next/font/google";
 import "./globals.css";
+import SessionInitializer from "@/components/SessionInitializer";
+import SnapScript from "@/components/SnapScript";
+import { Toaster } from "@/components/ui/sonner";
 
 const lexendGiga = Lexend_Giga({
   subsets: ["latin"],
@@ -22,8 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={lexendGiga.className}>
-        <div className="min-h-screen max-w-lg mx-auto border overflow-x-hidden scroll-smooth">{children}</div>
+      <body className={`${lexendGiga.className}`}>
+        <div className="min-h-screen max-w-lg mx-auto overflow-x-hidden ">
+          <SessionInitializer />
+          {children}
+          <SnapScript />
+          <Toaster richColors closeButton />
+        </div>
       </body>
     </html>
   );

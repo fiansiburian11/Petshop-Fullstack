@@ -6,6 +6,8 @@ import HeroSection from "@/components/HeroSection";
 import HubKami from "@/components/HubKami";
 
 const HomePage = () => {
+
+
   return (
     <div>
       <HeroSection />

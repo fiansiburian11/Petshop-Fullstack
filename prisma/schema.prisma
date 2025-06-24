@@ -24,11 +24,14 @@ model Keranjang {
   produk_id  Int
   jumlah     Int
   Produk     Produk @relation(fields: [produk_id], references: [id])
+
+  @@unique([session_id, produk_id])
 }
 
 model Pesanan {
   id          Int             @id @default(autoincrement())
   session_id  String
+  order_id    String?         @unique
   total_harga Int
   status      String          @default("pending")
   created_at  DateTime        @default(now())

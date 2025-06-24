@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { produkSchema } from "@/lib/validators/produk";
 import { createClient } from "@supabase/supabase-js";
 
@@ -13,18 +13,31 @@ export const config = {
 const prisma = new PrismaClient();
 
 // Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // pakai role key untuk upload file
-);
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
 // GET semua produk
-export async function GET() {
+
+export async function GET(req: NextRequest) {
   try {
-    const produk = await prisma.produk.findMany();
+    const { searchParams } = new URL(req.url);
+    const limitParam = searchParams.get("limit");
+    const search = searchParams.get("search") || "";
+
+    const limit = limitParam ? parseInt(limitParam) : 10;
+
+    const produk = await prisma.produk.findMany({
+      where: {
+        nama: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      take: limit,
+    });
+
     return NextResponse.json(
       {
-        message: "Berhasil mengambil semua produk",
+        message: "Berhasil mengambil produk",
         data: produk,
       },
       { status: 200 }
@@ -32,14 +45,13 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "Gagal fetch data produk",
+        message: "Gagal mengambil produk",
         error: error instanceof Error ? error.message : "Terjadi kesalahan",
       },
       { status: 500 }
     );
   }
 }
-
 
 // POST tambah produk + upload gambar
 export async function POST(req: Request) {

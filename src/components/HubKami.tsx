@@ -22,7 +22,7 @@ const sosmed = [
     link: "https://www.instagram.com/miuupetshop/",
   },
 ];
-const HubKami = ({id}: {id: string}) => {
+const HubKami = ({ id }: { id: string }) => {
   return (
     <div id={id} className="relative w-full h-[400px] overflow-hidden">
       {/* Background oranye melengkung */}
