@@ -162,7 +162,7 @@ const KatalogPage = () => {
                   <DialogContent className="max-w-sm rounded-2xl p-6">
                     <div className="flex flex-col gap-4">
                       <div className="w-full h-52 relative rounded-xl overflow-hidden">
-                        <Image src="/images/oyon.png" alt="Kucing" fill className="object-contain" />
+                        <Image src={item.gambar_url} alt="Kucing" fill className="object-contain" />
                       </div>
                       <div className="flex items-start justify-between">
                         <div>

@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${lexendGiga.className}`}>
-        <div className="min-h-screen max-w-lg mx-auto overflow-x-hidden ">
+        <div className="min-h-screen max-w-md mx-auto overflow-x-hidden ">
           <SessionInitializer />
           {children}
           <SnapScript />
