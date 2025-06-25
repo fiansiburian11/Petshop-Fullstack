@@ -1,14 +1,15 @@
 export const dynamic = "force-dynamic";
 
-import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   try {
-    const session_id = cookies().get("session_id")?.value;
+    const { searchParams } = new URL(req.url);
+    const session_id = searchParams.get("session_id");
+
     const { produk_id, jumlah } = await req.json();
 
     if (!session_id || !produk_id || !jumlah) {
