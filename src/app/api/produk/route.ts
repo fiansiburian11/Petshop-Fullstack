@@ -3,12 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { produkSchema } from "@/lib/validators/produk";
 import { createClient } from "@supabase/supabase-js";
 
-// ⛔ Wajib karena kita handle file manual
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+
 
 const prisma = new PrismaClient();
 
@@ -52,8 +47,6 @@ export async function GET(req: NextRequest) {
     );
   }
 }
-
-// POST tambah produk + upload gambar
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
@@ -61,31 +54,37 @@ export async function POST(req: Request) {
     const nama = formData.get("nama")?.toString();
     const harga = Number(formData.get("harga"));
     const stok = Number(formData.get("stok"));
-    const description = String(formData.get("description"));
-    const gambar = formData.get("gambar") as File;
+    const description = formData.get("description")?.toString() || "";
+    const gambar = formData.get("gambar") as File | null;
 
     if (!nama || !harga || !stok || !gambar) {
       return NextResponse.json({ error: "Semua field dan gambar wajib diisi" }, { status: 400 });
     }
 
-    // Validasi pakai produkSchema
-    const parsed = produkSchema.safeParse({
-      nama,
-      harga,
-      description,
-      stok,
-    });
+    // Validasi schema
+    const parsed = produkSchema.safeParse({ nama, harga, stok, description });
 
     if (!parsed.success) {
-      console.log("Zod error:", parsed.error.errors);
-      return NextResponse.json({ error: "Validasi gagal", detail: parsed.error.errors }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "Validasi gagal",
+          detail: parsed.error.format(),
+        },
+        { status: 400 }
+      );
     }
 
-    // Upload ke Supabase
-    const arrayBuffer = await gambar.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const filename = `produk/${Date.now()}-${gambar.name}`;
+    // Validasi jenis file
+    const validMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (!validMimeTypes.includes(gambar.type)) {
+      return NextResponse.json({ error: "Jenis gambar tidak didukung. Gunakan JPG, PNG, atau WebP." }, { status: 400 });
+    }
 
+    // Upload ke Supabase Storage
+    const arrayBuffer = await gambar.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer); // lebih efisien
+
+    const filename = `produk/${Date.now()}-${gambar.name.replace(/\s/g, "_")}`;
     const { error: uploadError } = await supabase.storage.from("produk").upload(filename, buffer, {
       contentType: gambar.type,
     });
@@ -101,8 +100,8 @@ export async function POST(req: Request) {
       data: {
         nama,
         harga,
-        description,
         stok,
+        description,
         gambar_url: publicURL.publicUrl,
       },
     });
