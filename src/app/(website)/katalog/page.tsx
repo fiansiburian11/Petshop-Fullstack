@@ -10,6 +10,7 @@ import { Minus, Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import Link from "next/link";
 // import { useSnapMidtrans } from "@/lib/useSnapMidtrans";
 
 const formatRupiah = (angka: number) => {
@@ -112,9 +113,9 @@ const KatalogPage = () => {
     <div className="relative min-h-screen overflow-hidden">
       <Image src="/images/bg.png" alt="Background" fill className="z-0" priority />
       <div className="relative z-10 overflow-hidden">
-        <div className="absolute top-5 left-5 z-20">
+        <Link href="/" className="absolute top-5 left-5 z-20">
           <Image src="/images/logo.png" alt="logo" width={125} height={125} />
-        </div>
+        </Link>
         <Navbar />
         <Searching onSearchResult={setProducts} />
         {products.length === 0 ? (
