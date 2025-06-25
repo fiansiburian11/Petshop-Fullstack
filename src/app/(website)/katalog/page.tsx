@@ -10,7 +10,7 @@ import { Minus, Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useSnapMidtrans } from "@/lib/useSnapMidtrans";
+// import { useSnapMidtrans } from "@/lib/useSnapMidtrans";
 
 const formatRupiah = (angka: number) => {
   return new Intl.NumberFormat("id-ID", {
@@ -25,7 +25,7 @@ const KatalogPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [jumlahDiKeranjang, setJumlahDiKeranjang] = useState(0);
-  const [isCheckoutAvailable, setIsCheckoutAvailable] = useState(false);
+  // const [isCheckoutAvailable, setIsCheckoutAvailable] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -71,19 +71,22 @@ const KatalogPage = () => {
 
       toast.success("Produk berhasil ditambahkan ke keranjang!");
       setJumlahDiKeranjang(totalInCart);
-      setIsCheckoutAvailable(true);
+      // setIsCheckoutAvailable(true);
     } catch (error) {
       const err = error as { response?: { data?: { error?: string } } };
       toast.error(err.response?.data?.error || "Gagal menambahkan ke keranjang");
     }
   };
 
-  // const handleCheckout = async () => {
+  // const { payWithSnap } = useSnapMidtrans();
+  //   const handleCheckout = async () => {
   //   if (!isCheckoutAvailable) {
   //     return toast("Tambahkan produk ke keranjang terlebih dahulu.");
   //   }
 
   //   try {
+  //     // Tutup dialog dulu
+
   //     const checkoutRes = await axiosInstance.post("/keranjang/checkout");
   //     const pesanan = checkoutRes.data.pesanan;
   //     if (!pesanan?.id) return toast("Gagal membuat pesanan");
@@ -91,95 +94,19 @@ const KatalogPage = () => {
   //     const bayarRes = await axiosInstance.post("/pembayaran", {
   //       pesanan_id: pesanan.id,
   //     });
+
   //     const { token } = bayarRes.data;
   //     if (!token) return toast("Token Midtrans tidak ditemukan");
 
+  //     // Tunggu animasi backdrop selesai (wajib delay)
   //     setTimeout(() => {
-  //       window.snap.pay(token, {
-  //         onSuccess: (result) => {
-  //           toast.success("Pembayaran berhasil!");
-  //           window.location.href = `/keranjang/pembayaran/sukses?order_id=${result.order_id}`;
-  //         },
-  //         onPending: (result) => {
-  //           toast("Menunggu pembayaran...");
-  //           window.location.href = `/keranjang/pembayaran/sukses?order_id=${result.order_id}`;
-  //         },
-  //         onError: () => toast.error("Pembayaran gagal"),
-  //         onClose: () => toast("Kamu menutup popup tanpa membayar."),
-  //       });
-  //     }, 300);
+  //       payWithSnap(token);
+  //     }, 400);
   //   } catch (err) {
   //     console.error("❌ Checkout error:", err);
   //     toast.error("Terjadi kesalahan saat checkout");
   //   }
   // };
-
-  // const handleCheckout = async () => {
-  const { payWithSnap } = useSnapMidtrans();
-  //   if (!isCheckoutAvailable) {
-  //     return toast("Tambahkan produk ke keranjang terlebih dahulu.");
-  //   }
-
-  //   try {
-  //     const checkoutRes = await axiosInstance.post("/keranjang/checkout");
-  //     const pesanan = checkoutRes.data.pesanan;
-  //     if (!pesanan?.id) return toast("Gagal membuat pesanan");
-
-  //     const bayarRes = await axiosInstance.post("/pembayaran", {
-  //       pesanan_id: pesanan.id,
-  //     });
-  //     const { token } = bayarRes.data;
-  //     if (!token) return toast("Token Midtrans tidak ditemukan");
-
-  //     // Tutup dialog dulu dan tunggu backdrop hilang
-  //     setDialogOpen(false);
-  //     await new Promise((res) => setTimeout(res, 400)); // tunggu 400ms
-
-  //     window.snap.pay(token, {
-  //       onSuccess: (result) => {
-  //         toast.success("Pembayaran berhasil!");
-  //         window.location.href = `/keranjang/pembayaran/sukses?order_id=${result.order_id}`;
-  //       },
-  //       onPending: (result) => {
-  //         toast("Menunggu pembayaran...");
-  //         window.location.href = `/keranjang/pembayaran/sukses?order_id=${result.order_id}`;
-  //       },
-  //       onError: () => toast.error("Pembayaran gagal"),
-  //       onClose: () => toast("Kamu menutup popup tanpa membayar."),
-  //     });
-  //   } catch (err) {
-  //     console.error("❌ Checkout error:", err);
-  //     toast.error("Terjadi kesalahan saat checkout");
-  //   }
-  // };
-  const handleCheckout = async () => {
-    if (!isCheckoutAvailable) {
-      return toast("Tambahkan produk ke keranjang terlebih dahulu.");
-    }
-
-    try {
-      // Tutup dialog dulu
-
-      const checkoutRes = await axiosInstance.post("/keranjang/checkout");
-      const pesanan = checkoutRes.data.pesanan;
-      if (!pesanan?.id) return toast("Gagal membuat pesanan");
-
-      const bayarRes = await axiosInstance.post("/pembayaran", {
-        pesanan_id: pesanan.id,
-      });
-
-      const { token } = bayarRes.data;
-      if (!token) return toast("Token Midtrans tidak ditemukan");
-
-      // Tunggu animasi backdrop selesai (wajib delay)
-      setTimeout(() => {
-        payWithSnap(token);
-      }, 400);
-    } catch (err) {
-      console.error("❌ Checkout error:", err);
-      toast.error("Terjadi kesalahan saat checkout");
-    }
-  };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -217,7 +144,7 @@ const KatalogPage = () => {
                         const cartItem = res.data.data.find((prod: Product) => prod.nama === item.nama);
                         const jumlah = cartItem?.quantity || 0;
                         setJumlahDiKeranjang(jumlah);
-                        setIsCheckoutAvailable(jumlah > 0);
+                        // setIsCheckoutAvailable(jumlah > 0);
                       } catch (err) {
                         console.error("❌ Gagal ambil data keranjang", err);
                       }
@@ -239,10 +166,13 @@ const KatalogPage = () => {
                       </div>
                       <div className="flex items-start justify-between">
                         <div>
-                          <h2 className="font-bold text-lg">{selectedProduct?.nama}</h2>
+                          <h2 className="font-bold text-lg ">{selectedProduct?.nama}</h2>
                           <p className="text-sm text-black">{formatRupiah(selectedProduct?.harga || 0)}</p>
                         </div>
-                        <p className="text-xs text-black pt-7">{selectedProduct?.stok} tersedia</p>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold">Stok</h3>
+                        <p className="text-xs text-black">{selectedProduct?.stok} Tersedia</p>
                       </div>
                       <div>
                         <h3 className="font-semibold">Deskripsi</h3>
@@ -264,13 +194,13 @@ const KatalogPage = () => {
                         </div>
                       </div>
                       <div className="flex mt-4 border border-black rounded-md">
-                        <Button onClick={() => handleAddToCart(item.id, quantity)} className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-black border-none rounded-l-md">
+                        <Button onClick={() => handleAddToCart(item.id, quantity)} className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-black border-none rounded-md">
                           <ShoppingCart className="w-4 h-4 mr-2" />
                           Keranjang
                         </Button>
-                        <Button onClick={handleCheckout} variant="outline" className="flex-1 border-none rounded-r-md">
+                        {/* <Button onClick={handleCheckout} variant="outline" className="flex-1 border-none rounded-r-md">
                           Beli
-                        </Button>
+                        </Button> */}
                       </div>
                     </div>
                   </DialogContent>

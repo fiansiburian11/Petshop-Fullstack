@@ -61,6 +61,7 @@ export async function POST(req: Request) {
     const nama = formData.get("nama")?.toString();
     const harga = Number(formData.get("harga"));
     const stok = Number(formData.get("stok"));
+    const description = String(formData.get("description"));
     const gambar = formData.get("gambar") as File;
 
     if (!nama || !harga || !stok || !gambar) {
@@ -71,6 +72,7 @@ export async function POST(req: Request) {
     const parsed = produkSchema.safeParse({
       nama,
       harga,
+      description,
       stok,
     });
 
@@ -99,6 +101,7 @@ export async function POST(req: Request) {
       data: {
         nama,
         harga,
+        description,
         stok,
         gambar_url: publicURL.publicUrl,
       },
