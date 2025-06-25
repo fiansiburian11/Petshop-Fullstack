@@ -4,40 +4,6 @@ import { cookies } from "next/headers";
 
 const prisma = new PrismaClient();
 
-/**
- * Tambah ke keranjang (POST)
- */
-
-// export async function POST(req: NextRequest) {
-//   try {
-//     const session_id = cookies().get("session_id")?.value;
-//     const { produk_id, jumlah } = await req.json();
-
-//     if (!session_id || !produk_id || !jumlah) {
-//       return NextResponse.json({ error: "session_id, produk_id, dan jumlah wajib diisi" }, { status: 400 });
-//     }
-
-//     const existing = await prisma.keranjang.findFirst({
-//       where: { session_id, produk_id },
-//     });
-
-//     if (existing) {
-//       await prisma.keranjang.update({
-//         where: { id: existing.id },
-//         data: { jumlah: existing.jumlah + jumlah },
-//       });
-//     } else {
-//       await prisma.keranjang.create({
-//         data: { session_id, produk_id, jumlah },
-//       });
-//     }
-
-//     return NextResponse.json({ message: "Berhasil menambahkan ke keranjang" });
-//   } catch (error) {
-//     console.error("❌ Error POST:", error);
-//     return NextResponse.json({ error: "Gagal menambahkan ke keranjang" }, { status: 500 });
-//   }
-// }
 export async function POST(req: NextRequest) {
   try {
     const session_id = cookies().get("session_id")?.value;
@@ -126,25 +92,6 @@ export async function GET(req: NextRequest) {
 /**
  * Update jumlah item di keranjang (PUT)
  */
-// export async function PUT(req: NextRequest) {
-//   try {
-//     const { session_id, keranjang_id, jumlah } = await req.json();
-
-//     if (!session_id || !keranjang_id || !jumlah) {
-//       return NextResponse.json({ error: "session_id, keranjang_id, dan jumlah wajib diisi" }, { status: 400 });
-//     }
-
-//     await prisma.keranjang.update({
-//       where: { id: keranjang_id },
-//       data: { jumlah },
-//     });
-
-//     return NextResponse.json({ message: "Jumlah berhasil diperbarui" });
-//   } catch (error) {
-//     console.error("❌ Error PUT:", error);
-//     return NextResponse.json({ error: "Gagal update jumlah" }, { status: 500 });
-//   }
-// }
 export async function PUT(req: NextRequest) {
   try {
     const { session_id, keranjang_id, jumlah } = await req.json();
