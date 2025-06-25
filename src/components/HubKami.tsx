@@ -43,8 +43,8 @@ const HubKami = ({ id }: { id: string }) => {
         ))}
       </div>
 
-      <div className="absolute bottom-32 right-0 z-20">
-        <Image src="/images/siitam.png" alt="Kucing" width={120} height={120} />
+      <div className="absolute bottom-56 right-0 z-20">
+        <Image src="/images/siitam.png" alt="Kucing" width={100} height={120} />
       </div>
     </div>
   );

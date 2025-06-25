@@ -1,7 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react'
-import { Button } from './ui/button';
 
 const WelcomeScetion = () => {
   return (
@@ -12,11 +9,11 @@ const WelcomeScetion = () => {
           <div className="text-center">
             <h1 className="font-bold text-left text-lg text-black mb-2">Selamat Datang Di Miu Petshop!</h1>
             <p className="text-sm text-black text-left mb-4">dari hati untuk si anabul dan teman-temannya</p>
-            <div className="">
+            {/* <div>
               <Link href="/katalog">
                 <Button className="mt-4 bg-[#CFEAF3] text-black font-semibold text-xs rounded-xl px-6 hover:bg-[#CFEAF3]/80 transition-colors duration-200 ">Lihat Barang</Button>
               </Link>
-            </div>
+            </div> */}
           </div>
           <div className="flex justify-center">
             <Image src="/images/kucing1.png" alt="kucing1" width={180} height={180} className="object-contain" />

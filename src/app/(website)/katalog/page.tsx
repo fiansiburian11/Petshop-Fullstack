@@ -159,25 +159,31 @@ const KatalogPage = () => {
                     </div>
                   </DialogTrigger>
 
-                  <DialogContent className="max-w-sm rounded-2xl p-6">
+                  <DialogContent className="max-w-sm rounded-2xl p-3">
                     <div className="flex flex-col gap-4">
                       <div className="w-full h-52 relative rounded-xl overflow-hidden">
                         <Image src={item.gambar_url} alt="Kucing" fill className="object-contain" />
                       </div>
+
                       <div className="flex items-start justify-between">
-                        <div>
-                          <h2 className="font-bold text-lg ">{selectedProduct?.nama}</h2>
+                        <div className="w-[240px]">
+                          {" "}
+                          {/* batasi lebar agar truncate bisa jalan */}
+                          <h2 className="font-bold text-lg truncate block">{selectedProduct?.nama}</h2>
                           <p className="text-sm text-black">{formatRupiah(selectedProduct?.harga || 0)}</p>
                         </div>
                       </div>
+
                       <div>
                         <h3 className="font-semibold">Stok</h3>
                         <p className="text-xs text-black">{selectedProduct?.stok} Tersedia</p>
                       </div>
+
                       <div>
                         <h3 className="font-semibold">Deskripsi</h3>
-                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                        <p className="text-sm text-muted-foreground line-clamp-3">{item.description}</p>
                       </div>
+
                       <div>
                         <h3 className="font-semibold mb-2">Jumlah</h3>
                         <div className="flex items-center justify-between">
@@ -193,14 +199,12 @@ const KatalogPage = () => {
                           <p className="font-medium">{formatRupiah((selectedProduct?.harga ?? 0) * quantity)}</p>
                         </div>
                       </div>
+
                       <div className="flex mt-4 border border-black rounded-md">
                         <Button onClick={() => handleAddToCart(item.id, quantity)} className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-black border-none rounded-md">
                           <ShoppingCart className="w-4 h-4 mr-2" />
                           Keranjang
                         </Button>
-                        {/* <Button onClick={handleCheckout} variant="outline" className="flex-1 border-none rounded-r-md">
-                          Beli
-                        </Button> */}
                       </div>
                     </div>
                   </DialogContent>

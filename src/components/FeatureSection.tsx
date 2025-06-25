@@ -6,10 +6,10 @@ const FeaturesSection = () => {
     <div className="w-full py-16 px-8 bg-white">
       <div className="max-w-6xl mx-auto space-y-16">
         {/* Feature 1 - Lingkungan Aman & Bersih */}
-        <div className="grid grid-cols-[1fr_2fr] gap-2">
+        <div className="grid grid-cols-[1fr_2fr] gap-2 ">
           <div className="relative">
             <div className="w-32 h-36 bg-gradient-to-br from-orange-400 to-orange-500 rounded-l-[50px] rounded-r-[50px] relative " />
-            <Image src="/images/oyon.png" alt="Kitten" width={110} height={110} className="absolute -bottom-1 left-3" />
+            <Image src="/images/oyon.png" alt="Kitten" width={110} height={110} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 " />
           </div>
           <div className="space-y-4">
             <h2 className="text-sm font-bold text-gray-800">Lingkungan Aman & Bersih</h2>
@@ -31,17 +31,17 @@ const FeaturesSection = () => {
           </div>
           <div className="relative w-full h-[200px]">
             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-32 h-36 bg-orange-400 rounded-l-[50px] rounded-r-[50px] z-0" />
-            <div className="absolute -right-8 -bottom-6 w-[220px] h-[220px] z-10">
+            <div className="absolute -right-8 -bottom-6 w-[180px] h-[180px] z-10">
               <Image src="/images/oyen.png" alt="Cat Training" fill className="object-contain" />
             </div>
           </div>
         </div>
 
         {/* Feature 3 - Keseimbangan Fisik & Mental */}
-        <div className="grid grid-cols-[1fr_2fr] gap-2">
+        <div className="grid grid-cols-[1fr_2fr] gap-2 ">
           <div className="relative">
             <div className="w-32 h-36 bg-gradient-to-br from-orange-400 to-orange-500 rounded-l-[50px] rounded-r-[50px] relative " />
-            <Image src="/images/oyan.png" alt="Kitten" width={200} height={200} className="absolute -bottom-0 -left-8" />
+            <Image src="/images/oyan.png" alt="Kitten" width={100} height={100} className="absolute top-1/3 left-1/3  transform -translate-x-1/2 -translate-y-1/2 mt-1" />
           </div>
           <div className="space-y-4">
             <h2 className="text-sm font-bold text-gray-800">Keseimbangan Fisik & Mental</h2>

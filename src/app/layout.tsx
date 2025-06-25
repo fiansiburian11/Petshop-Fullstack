@@ -30,7 +30,7 @@ export default function RootLayout({
           <SessionInitializer />
           {children}
           <SnapScript />
-          <Toaster richColors closeButton />
+          <Toaster richColors closeButton position="top-center" />
         </div>
       </body>
     </html>

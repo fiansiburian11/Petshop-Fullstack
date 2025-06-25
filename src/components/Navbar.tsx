@@ -47,7 +47,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="absolute top-5 right-5 z-20 flex gap-4 items-center">
+      <div className="absolute top-5 right-1 z-20 flex  items-center">
         {navbar.map((item) => (
           <Link key={item.id} href={item.href} className={clsx("hover:opacity-50 transition-opacity px-3 py-2 cursor-pointer", pathname === item.href ? "text-[#FFA733] text-sm font-extrabold" : "text-xs font-semibold text-black")}>
             {item.name}

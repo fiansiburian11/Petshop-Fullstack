@@ -34,15 +34,15 @@ const BestProducts = () => {
       <Image src="/images/Jejak.png" alt="Jejak" fill className="object-cover z-0" />
 
       <div className="absolute inset-0 z-10 flex justify-center items-center">
-        <div className="flex gap-1">
+        <div className="grid grid-cols-3 gap-1">
           {products.map((item) => (
-            <Card key={item.id} className="w-40 bg-[#FFA733] hover:bg-[#FFA733]/80 shadow-lg rounded-[45px]  overflow-hidden">
-              <CardContent className="p-0">
-                <Image src={item.gambar_url} alt={item.nama} width={208} height={208} className="object-contain w-full h-40" />
+            <Card key={item.id} className="bg-white  shadow-lg rounded-[45px]  overflow-hidden">
+              <CardContent >
+                <Image src={item.gambar_url} alt={item.nama} width={208} height={208} className="object-cover" />
               </CardContent>
-              <CardFooter className="justify-between  bg-[#D9D9D9] px-4 py-3 text-xs font-bold rounded-b-[45px]">
-                <p className="truncate">{item.nama}</p>
-                <p>{formatRupiah(item.harga)}</p>
+              <CardFooter className="justify-between  bg-[#D9D9D9] px-4 py-2 text-xs font-bold w-">
+                <p className="truncate w-full block ">{item.nama}</p>
+                <p className="truncate text-[9px]">{formatRupiah(item.harga)}</p>
               </CardFooter>
             </Card>
           ))}
